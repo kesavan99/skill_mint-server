@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from models.login_model import LoginRequest, LoginResponse
+from models.login_model import LoginRequest, LoginResponse, SignupRequest, SignupResponse
 from controllers.auth_controller import AuthController
 
 router = APIRouter(prefix="/skill-mint", tags=["Authentication"])
@@ -14,3 +14,14 @@ async def login(login_data: LoginRequest):
     Returns success status
     """
     return AuthController.login(login_data)
+
+
+@router.post("/signup", response_model=SignupResponse)
+async def signup(signup_data: SignupRequest):
+    """
+    Signup endpoint
+    
+    Accepts JSON payload with name, email and password
+    Returns success status
+    """
+    return AuthController.signup(signup_data)

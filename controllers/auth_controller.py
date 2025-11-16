@@ -1,4 +1,4 @@
-from models.login_model import LoginRequest, LoginResponse
+from models.login_model import LoginRequest, LoginResponse, SignupRequest, SignupResponse
 
 
 class AuthController:
@@ -19,3 +19,19 @@ class AuthController:
         # For now, returning success for all requests
         
         return LoginResponse(status="success")
+    
+    @staticmethod
+    def signup(signup_data: SignupRequest) -> SignupResponse:
+        """
+        Handle signup logic
+        
+        Args:
+            signup_data: SignupRequest containing name, email and password
+            
+        Returns:
+            SignupResponse with status
+        """
+        # Add your signup logic here
+        # For now, returning success for all requests
+        
+        return SignupResponse(status="success")
