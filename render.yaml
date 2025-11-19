@@ -1,0 +1,10 @@
+# Render.com deployment configuration
+services:
+  - type: web
+    name: skill-mint-server
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
