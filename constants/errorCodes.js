@@ -6,6 +6,9 @@ const ERROR_CODES = {
   ERC4: 'ERC4', // Incorrect password
   ERC5: 'ERC5', // Internal server error
   ERC6: 'ERC6', // Validation error (invalid email format, etc.)
+  ERC7: 'ERC7', // Authentication token required
+  ERC8: 'ERC8', // Token expired
+  ERC9: 'ERC9', // Invalid token
   
   // Database errors (ERC11-ERC20)
   ERC11: 'ERC11', // Database connection error
@@ -27,6 +30,9 @@ const ERROR_MESSAGES = {
   ERC4: 'Incorrect password',
   ERC5: 'Internal server error',
   ERC6: 'Validation error',
+  ERC7: 'Authentication token required',
+  ERC8: 'Token has expired. Please login again.',
+  ERC9: 'Invalid authentication token',
   
   ERC11: 'Database connection error',
   ERC12: 'User creation failed',

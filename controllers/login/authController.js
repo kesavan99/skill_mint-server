@@ -1,5 +1,6 @@
 const UserService = require('../../services/userService');
 const DataParser = require('../../utils/dataParser');
+const JWTUtils = require('../../utils/jwtUtils');
 const { ERROR_CODES } = require('../../constants/errorCodes');
 
 class AuthController {
@@ -30,10 +31,25 @@ class AuthController {
         
         const result = await UserService.createUser(cleanData);
         
+        // Generate JWT token
+        const token = JWTUtils.generateToken({
+          userId: result.data.id,
+          email: result.data.email,
+          loginMethod: result.data.loginMethod
+        });
+        
+        // Set cookie
+        res.cookie('authToken', token, {
+          httpOnly: true,
+          sameSite: 'lax',
+          maxAge: 3 * 60 * 60 * 1000 // 3 hours
+        });
+        
         return res.status(201).json({
           status: 'success',
           message: 'Account created successfully',
-          data: result.data
+          data: result.data,
+          token: token
         });
       } else {
         if (!existingUser) {
@@ -50,13 +66,29 @@ class AuthController {
           });
         }
         
+        // Generate JWT token
+        const token = JWTUtils.generateToken({
+          userId: existingUser._id,
+          email: existingUser.email,
+          loginMethod: existingUser.loginMethod
+        });
+        
+        // Set cookie
+        res.cookie('authToken', token, {
+          httpOnly: true,
+          sameSite: 'lax',
+          maxAge: 3 * 60 * 60 * 1000 // 3 hours
+        });
+        
         return res.status(200).json({
           status: 'success',
           message: 'Login successful',
           data: {
             email: existingUser.email,
-            name: existingUser.name
-          }
+            name: existingUser.name,
+            loginMethod: existingUser.loginMethod
+          },
+          token: token
         });
       }
       
@@ -98,10 +130,25 @@ class AuthController {
         profilePicture
       });
       
+      // Generate JWT token
+      const token = JWTUtils.generateToken({
+        userId: result.data.id,
+        email: result.data.email,
+        loginMethod: 'google'
+      });
+      
+      // Set cookie
+      res.cookie('authToken', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 3 * 60 * 60 * 1000 // 3 hours
+      });
+      
       return res.status(200).json({
         status: 'success',
         message: 'Google login successful',
-        data: result.data
+        data: result.data,
+        token: token
       });
       
     } catch (error) {
