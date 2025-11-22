@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/login/authController');
+const authMiddleware = require('../middleware/authMiddleware');
 const { body, validationResult } = require('express-validator');
 const { ERROR_CODES } = require('../constants/errorCodes');
 
@@ -40,5 +41,14 @@ const googleLoginValidation = [
 
 router.post('/login', loginValidation, validate, AuthController.login);
 router.post('/google-login', googleLoginValidation, validate, AuthController.googleLogin);
+
+// Protected route example - requires authentication
+router.get('/profile', authMiddleware, (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Protected route accessed',
+    user: req.user
+  });
+});
 
 module.exports = router;

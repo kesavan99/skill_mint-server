@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
@@ -9,13 +10,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: '*',
+  origin: ['http://localhost:3000','https://bejewelled-alpaca-18236b.netlify.app'], // Allow both React and server origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  credentials: true
+  credentials: true, // Important for cookies
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
