@@ -8,3 +8,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: MONGODB_URI
+        sync: false  # Set this in Render.com dashboard
+      - key: MONGODB_DB_NAME
+        value: skill-mint
+      - key: PORT
+        value: 3000
