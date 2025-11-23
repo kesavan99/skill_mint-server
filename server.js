@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000','https://bejewelled-alpaca-18236b.netlify.app'], // Allow both React and server origins
+  origin: ['http://localhost:8080', 'http://localhost:3000','https://bejewelled-alpaca-18236b.netlify.app'], // Allow Vite dev server, React and deployed app
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   credentials: true, // Important for cookies
