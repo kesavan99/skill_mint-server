@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
+const codeRoutes = require('./routes/codeRoutes');
 const mongooseConnection = require('./models/mongooseConnection');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/skill-mint', authRoutes);
 app.use('/api/resume', resumeRoutes);
+app.use('/api/code', codeRoutes);
 
 app.get('/', (req, res) => {
   res.json({
