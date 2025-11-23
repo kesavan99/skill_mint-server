@@ -1,6 +1,6 @@
-const pdfService = require('../services/pdfService');
-const pdfParserService = require('../services/pdfParserService');
-const geminiService = require('../services/geminiService');
+const pdfService = require('../../services/pdfService');
+const pdfParserService = require('../../services/pdfParserService');
+const geminiService = require('../../services/geminiService');
 
 exports.uploadAndParsePDF = async (req, res) => {
   try {

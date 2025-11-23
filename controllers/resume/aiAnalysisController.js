@@ -1,4 +1,4 @@
-const { analyzeResumeWithAI } = require('../services/aiAnalysisService');
+const { analyzeResumeWithAI } = require('../../services/aiAnalysisService');
 
 /**
  * Analyze resume against job role and experience level
