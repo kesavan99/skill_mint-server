@@ -14,3 +14,11 @@ services:
         value: skill-mint
       - key: PORT
         value: 3000
+      - key: GEMINI_API_KEY
+        sync: false  # Set this in Render.com dashboard
+      - key: GEMINI_MODEL_ID
+        value: gemini-2.0-flash
+      - key: GEMINI_MODEL_FALLBACKS
+        value: gemini-1.5-flash,gemini-1.5-pro
+      - key: GEMINI_API_VERSION
+        value: v1beta

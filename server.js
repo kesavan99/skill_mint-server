@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
+const resumeRoutes = require('./routes/resumeRoutes');
 const mongooseConnection = require('./models/mongooseConnection');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/skill-mint', authRoutes);
+app.use('/api/resume', resumeRoutes);
 
 app.get('/', (req, res) => {
   res.json({
