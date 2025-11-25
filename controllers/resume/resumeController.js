@@ -52,7 +52,9 @@ exports.uploadAndParsePDF = async (req, res) => {
 
 exports.generatePDF = async (req, res) => {
   try {
-    const resumeData = req.body;
+    const { template = 'resume-template', ...resumeData } = req.body;
+    
+    console.log('PDF - Received template:', template);
     
     // Validate required fields
     if (!resumeData.personalInfo || !resumeData.personalInfo.name) {
@@ -62,8 +64,8 @@ exports.generatePDF = async (req, res) => {
       });
     }
 
-    // Generate PDF
-    const pdfBuffer = await pdfService.generateResumePDF(resumeData);
+    // Generate PDF with selected template
+    const pdfBuffer = await pdfService.generateResumePDF(resumeData, template);
 
     // Set headers for PDF download
     res.setHeader('Content-Type', 'application/pdf');
@@ -81,7 +83,10 @@ exports.generatePDF = async (req, res) => {
 
 exports.generatePreview = async (req, res) => {
   try {
-    const resumeData = req.body;
+    const { template = 'resume-template', ...resumeData } = req.body;
+    
+    console.log('Received template:', template);
+    console.log('Resume data keys:', Object.keys(resumeData));
     
     // Validate required fields
     if (!resumeData.personalInfo || !resumeData.personalInfo.name) {
@@ -91,8 +96,8 @@ exports.generatePreview = async (req, res) => {
       });
     }
 
-    // Generate HTML preview
-    const htmlContent = await pdfService.generateResumeHTML(resumeData);
+    // Generate HTML preview with selected template
+    const htmlContent = await pdfService.generateResumeHTML(resumeData, template);
 
     res.setHeader('Content-Type', 'text/html');
     res.send(htmlContent);

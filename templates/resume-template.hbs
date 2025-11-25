@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{personalInfo.name}} - Resume</title>
   <style>
-    * {
+    /* Reset for this template only */
+    #resume-classic * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    body {
+    #resume-classic {
       font-family: 'Times New Roman', Times, serif;
       line-height: 1.4;
       color: #000;
@@ -19,18 +19,18 @@
       font-size: 11pt;
     }
 
-    .container {
+    #resume-classic .container {
       max-width: 750px;
       margin: 0 auto;
       padding: 0px 40px;
     }
 
     /* Header Section */
-    .header {
+    #resume-classic .header {
       text-align: center;
     }
 
-    .header h1 {
+    #resume-classic .header h1 {
       font-size: 24pt;
       color: #000;
       margin-bottom: 5px;
@@ -38,28 +38,28 @@
       letter-spacing: 0.5px;
     }
 
-    .contact-info {
+    #resume-classic .contact-info {
       font-size: 10pt;
       color: #000;
     }
 
-    .contact-info a {
+    #resume-classic .contact-info a {
       color: #000;
       text-decoration: none;
     }
 
     /* Section Styles */
-    .section {
+    #resume-classic .section {
       margin-bottom: 20px;
     }
 
-    .border-line{
+    #resume-classic .border-line{
       border-bottom: 1.5px solid #000;
       padding-bottom: 3px;
       margin-bottom: 10px;
     }
 
-    .section-title {
+    #resume-classic .section-title {
       font-size: 13pt;
       padding-bottom: 8px;
       color: #000;
@@ -67,7 +67,7 @@
     }
 
     /* Profile/Summary */
-    .summary {
+    #resume-classic .summary {
       text-align: justify;
       color: #000;
       font-size: 10.5pt;
@@ -76,59 +76,59 @@
     }
 
     /* Skills */
-    .skills-section {
+    #resume-classic .skills-section {
       margin-bottom: 15px;
     }
 
-    .skills-category {
+    #resume-classic .skills-category {
       margin-bottom: 8px;
     }
 
-    .skills-label {
+    #resume-classic .skills-label {
       font-weight: 700;
       display: inline;
       margin-right: 5px;
     }
 
-    .skills-list {
+    #resume-classic .skills-list {
       display: inline;
       font-size: 10.5pt;
     }
 
     /* Experience */
-    .experience-item {
+    #resume-classic .experience-item {
       margin-bottom: 15px;
     }
 
-    .experience-header {
+    #resume-classic .experience-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 2px;
     }
 
-    .job-title {
+    #resume-classic .job-title {
       font-weight: 700;
       font-size: 11pt;
     }
 
-    .duration {
+    #resume-classic .duration {
       font-weight: 700;
       font-size: 10.5pt;
       font-style: italic;
     }
 
-    .company {
+    #resume-classic .company {
       font-style: italic;
       font-size: 10.5pt;
       margin-bottom: 5px;
     }
 
-    .experience-item ul {
+    #resume-classic .experience-item ul {
       margin-left: 20px;
       margin-top: 5px;
     }
 
-    .experience-item li {
+    #resume-classic .experience-item li {
       font-size: 10.5pt;
       line-height: 1.4;
       margin-bottom: 4px;
@@ -136,48 +136,48 @@
     }
 
     /* Education */
-    .education-item {
+    #resume-classic .education-item {
       margin-bottom: 10px;
     }
 
-    .education-header {
+    #resume-classic .education-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 2px;
     }
 
-    .institution {
+    #resume-classic .institution {
       font-weight: 700;
       font-size: 11pt;
     }
 
-    .year {
+    #resume-classic .year {
       font-weight: 700;
       font-size: 10.5pt;
     }
 
-    .degree {
+    #resume-classic .degree {
       font-style: italic;
       font-size: 10.5pt;
     }
 
     /* Projects */
-    .project-item {
+    #resume-classic .project-item {
       margin-bottom: 12px;
     }
 
-    .project-name {
+    #resume-classic .project-name {
       font-weight: 700;
       font-size: 11pt;
       margin-bottom: 3px;
     }
 
-    .project-item ul {
+    #resume-classic .project-item ul {
       margin-left: 20px;
       margin-top: 3px;
     }
 
-    .project-item li {
+    #resume-classic .project-item li {
       font-size: 10.5pt;
       line-height: 1.4;
       margin-bottom: 3px;
@@ -186,13 +186,14 @@
 
     /* Page break */
     @media print {
-      .page-break {
+      #resume-classic .page-break {
         page-break-before: always;
       }
     }
   </style>
 </head>
 <body>
+  <div id="resume-classic">
   <div class="container">
     <!-- Header -->
     <div class="header">
@@ -295,6 +296,7 @@
       </ul>
     </div>
     {{/if}}
+  </div>
   </div>
 </body>
 </html>

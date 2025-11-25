@@ -12,10 +12,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:8080', 'http://localhost:3000','https://bejewelled-alpaca-18236b.netlify.app'], // Allow Vite dev server, React and deployed app
+  origin: [
+    'https://skillhubtools.store',
+    'http://skillhubtools.store',
+    'https://www.skillhubtools.store'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  credentials: true, // Important for cookies
+  credentials: true,
   optionsSuccessStatus: 200
 };
 
@@ -40,8 +44,7 @@ const startServer = async () => {
     await mongooseConnection.connect();
     
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Server is running on port ${PORT}`);
-      console.log(`📝 API endpoint: http://localhost:${PORT}/skill-mint/login`);
+      console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
