@@ -5,7 +5,7 @@ const path = require("path");
 const resumeController = require('../controllers/resume/resumeController');
 const aiAnalysisController = require('../controllers/resume/aiAnalysisController');
 const authMiddleware = require('../middleware/authMiddleware');
-
+const { strictLimiter } = require('../middleware/rate-limiter');
 
 function sanitizeFilename(originalName) {
   return originalName.replace(/[^a-zA-Z0-9.\-_]/g, "_");

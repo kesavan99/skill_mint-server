@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const { normalLimiter, strictLimiter } = require('./middleware/rate-limiter');
+const { normalLimiter } = require('./middleware/rate-limiter');
 const helmet = require("helmet");
 require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');

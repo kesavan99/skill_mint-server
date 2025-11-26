@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/login/authController');
-const authMiddleware = require('../middleware/authMiddleware');
 const { body, validationResult } = require('express-validator');
 const { ERROR_CODES } = require('../constants/errorCodes');
+const { strictLimiter } = require('../middleware/rate-limiter');
 
 const loginValidation = [
     body('email')
