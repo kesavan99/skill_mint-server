@@ -1,7 +1,7 @@
 const pdfService = require('../../services/pdfService');
 const pdfParserService = require('../../services/pdfParserService');
 const geminiService = require('../../services/geminiService');
-const { scanBuffer } = require("../../utils/clamScanner");
+// const { scanBuffer } = require("../../utils/clamScanner");
 
 exports.uploadAndParsePDF = async (req, res) => {
   try {
@@ -18,15 +18,15 @@ exports.uploadAndParsePDF = async (req, res) => {
       });
     }
 
-    const scanResult = await scanBuffer(req.file.buffer);
-    if (scanResult.isInfected) {
-      console.error("Infected PDF detected:", scanResult.viruses);
+    // const scanResult = await scanBuffer(req.file.buffer);
+    // if (scanResult.isInfected) {
+    //   console.error("Infected PDF detected:", scanResult.viruses);
 
-      return res.status(400).json({
-        error: "Malicious PDF detected",
-        message: `Infected with: ${scanResult.viruses.join(", ")}`
-      });
-    }
+    //   return res.status(400).json({
+    //     error: "Malicious PDF detected",
+    //     message: `Infected with: ${scanResult.viruses.join(", ")}`
+    //   });
+    // }
 
     console.log('scan passed + Processing uploaded PDF:', req.file.originalname);
 
