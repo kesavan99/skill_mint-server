@@ -41,5 +41,6 @@ const googleLoginValidation = [
 
 router.post('/login',loginValidation, validate, AuthController.login);
 router.post('/google-login', strictLimiter, googleLoginValidation, validate, AuthController.googleLogin);
+router.get('/check', AuthController.checkSession);
 
 module.exports = router;

@@ -111,6 +111,57 @@ class AuthController {
     }
   }
 
+  static async checkSession(req, res) {
+    try {
+      const token = req.cookies && req.cookies.authToken;
+
+      if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'Not authenticated' });
+      }
+
+      // Verify token
+      let payload;
+      try {
+        payload = require('../../utils/jwtUtils').verifyToken(token);
+      } catch (err) {
+        return res.status(401).json({ loggedIn: false, message: 'Not authenticated' });
+      }
+
+      // Attempt to get fresh user info (name may not be present in token)
+      const User = require('../../models/schemas/userSchema');
+      let user = null;
+      try {
+        if (payload.email) {
+          user = await User.findOne({ email: payload.email.toLowerCase() }).select('email name _id');
+        } else if (payload.userId) {
+          user = await User.findById(payload.userId).select('email name _id');
+        }
+      } catch (err) {
+        // ignore DB errors and fall back to token payload
+        user = null;
+      }
+
+      const userObj = user
+        ? { id: user._id, email: user.email, name: user.name }
+        : { id: payload.userId || null, email: payload.email || null };
+
+      // decode token to extract expiry if present
+      const decoded = require('../../utils/jwtUtils').decodeToken(token) || {};
+      let expiresAt;
+      if (decoded.exp) {
+        expiresAt = new Date(decoded.exp * 1000).toISOString();
+      }
+
+      const response = { loggedIn: true, user: userObj };
+      if (expiresAt) response.expiresAt = expiresAt;
+
+      return res.status(200).json(response);
+    } catch (error) {
+      console.error('Session check error:', error);
+      return res.status(401).json({ loggedIn: false, message: 'Not authenticated' });
+    }
+  }
+
   static async googleLogin(req, res) {
     try {
       const { email, name, googleId, profilePicture } = req.body;
