@@ -22,7 +22,3 @@ services:
         value: gemini-1.5-flash,gemini-1.5-pro
       - key: GEMINI_API_VERSION
         value: v1beta
-      - key: PUPPETEER_SKIP_DOWNLOAD
-        value: true
-      - key: PUPPETEER_EXECUTABLE_PATH
-        value: /usr/bin/chromium-browser
