@@ -39,11 +39,11 @@ const googleLoginValidation = [
         .trim(),
 ];
 
-router.post('/login', loginValidation, validate, AuthController.login);
-router.post('/google-login', googleLoginValidation, validate, AuthController.googleLogin);
+router.post('/login', authMiddleware,loginValidation, validate, AuthController.login);
+router.post('/google-login', authMiddleware, googleLoginValidation, validate, AuthController.googleLogin);
 
-// Protected route example - requires authentication
 router.get('/profile', authMiddleware, (req, res) => {
+    console.log('Authenticated user:', req.user);
   res.json({
     status: 'success',
     message: 'Protected route accessed',

@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const codeController = require('../controllers/code/codeController');
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Format code
-router.post('/format', codeController.formatCode);
+router.post('/format',authMiddleware, codeController.formatCode);
 
 // Lint code
-router.post('/lint', codeController.lintCode);
+router.post('/lint', authMiddleware, codeController.lintCode);
 
 // Check diff
-router.post('/diff', codeController.checkDiff);
+router.post('/diff', authMiddleware, codeController.checkDiff);
 
 module.exports = router;
