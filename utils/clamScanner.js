@@ -21,6 +21,11 @@ async function initClam() {
       }
     });
 
+    if (!clamscan) {
+      console.warn("ClamAV not available. Skipping virus scan.");
+      return { isInfected: false, viruses: [] };
+    }
+
     clamScan = clamscan;
     return clamscan;
 

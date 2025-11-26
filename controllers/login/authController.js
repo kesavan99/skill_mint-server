@@ -38,10 +38,11 @@ class AuthController {
           loginMethod: result.data.loginMethod
         });
         
-        // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+        // Set cookie (HttpOnly, SameSite=None for cross-site). Determine Secure flag per-request
+        const secureFlag = (process.env.NODE_ENV === 'production') || req.secure || req.headers['x-forwarded-proto'] === 'https';
         const cookieOpts = {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: !!secureFlag,
           sameSite: 'none',
           path: '/',
           maxAge: 3 * 60 * 60 * 1000
@@ -77,10 +78,11 @@ class AuthController {
           loginMethod: existingUser.loginMethod
         });
         
-        // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+        // Set cookie (HttpOnly, SameSite=None for cross-site). Determine Secure flag per-request
+        const secureFlag = (process.env.NODE_ENV === 'production') || req.secure || req.headers['x-forwarded-proto'] === 'https';
         const cookieOpts = {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: !!secureFlag,
           sameSite: 'none',
           path: '/',
           maxAge: 3 * 60 * 60 * 1000
@@ -196,10 +198,11 @@ class AuthController {
         loginMethod: 'google'
       });
       
-      // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+      // Set cookie (HttpOnly, SameSite=None for cross-site). Determine Secure flag per-request
+      const secureFlag = (process.env.NODE_ENV === 'production') || req.secure || req.headers['x-forwarded-proto'] === 'https';
       const cookieOpts = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: !!secureFlag,
         sameSite: 'none',
         path: '/',
         maxAge: 3 * 60 * 60 * 1000
