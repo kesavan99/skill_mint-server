@@ -9,6 +9,7 @@ const resumeRoutes = require('./routes/resumeRoutes');
 const codeRoutes = require('./routes/codeRoutes');
 const mongooseConnection = require('./models/mongooseConnection');
 const { initClam } = require("./utils/clamScanner");
+const nocache = require("nocache");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,7 @@ const corsOptions = {
 initClam();
 app.use(cors(corsOptions));
 app.use(helmet());
+app.use(nocache());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());  
 app.use(normalLimiter);
@@ -43,7 +45,6 @@ app.use(
   })
 );
 app.use(helmet.dnsPrefetchControl({ allow: false }));
-app.use(helmet.noCache());
 app.use(
   helmet.hsts({
     maxAge: 31536000,
@@ -53,7 +54,6 @@ app.use(
 );
 app.use(helmet.frameguard({ action: "deny" }));
 
-app.use(ratelimitter);
 app.use('/skill-mint', authRoutes);
 app.use('/api/resume', resumeRoutes);
 app.use('/api/code', codeRoutes);
