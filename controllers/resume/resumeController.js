@@ -50,36 +50,6 @@ exports.uploadAndParsePDF = async (req, res) => {
   }
 };
 
-exports.generatePDF = async (req, res) => {
-  try {
-    const { template = 'resume-template', ...resumeData } = req.body;
-    
-    console.log('PDF - Received template:', template);
-    
-    // Validate required fields
-    if (!resumeData.personalInfo || !resumeData.personalInfo.name) {
-      return res.status(400).json({ 
-        error: 'Invalid resume data',
-        message: 'Personal info with name is required' 
-      });
-    }
-
-    // Generate PDF with selected template
-    const pdfBuffer = await pdfService.generateResumePDF(resumeData, template);
-
-    // Set headers for PDF download
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${resumeData.personalInfo.name.replace(/\s+/g, '_')}_Resume.pdf"`);
-    
-    res.send(pdfBuffer);
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    res.status(500).json({ 
-      error: 'Failed to generate PDF',
-      message: error.message 
-    });
-  }
-};
 
 exports.generatePreview = async (req, res) => {
   try {

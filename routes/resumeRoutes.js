@@ -23,8 +23,6 @@ const upload = multer({
 // Upload and parse PDF resume
 router.post('/upload', upload.single('pdf'), resumeController.uploadAndParsePDF);
 
-// Generate PDF from resume data
-router.post('/generate-pdf', resumeController.generatePDF);
 
 // Preview HTML (for frontend preview before PDF generation)
 router.post('/preview', resumeController.generatePreview);
