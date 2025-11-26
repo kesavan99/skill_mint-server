@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 const codeRoutes = require('./routes/codeRoutes');
 const mongooseConnection = require('./models/mongooseConnection');
+const { initClam } = require("./utils/clamScanner");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,7 +25,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-
+initClam();
 app.use(cors(corsOptions));
 app.use(helmet());
 app.use(helmet.noSniff());
@@ -50,11 +51,7 @@ app.use(
     preload: true
   })
 );
-app.use(
-  helmet({
-    frameguard: false
-  })
-);
+app.use(helmet.frameguard({ action: "deny" }));
 
 app.use(ratelimitter);
 app.use('/skill-mint', authRoutes);

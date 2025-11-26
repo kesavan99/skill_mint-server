@@ -3,7 +3,7 @@ services:
   - type: web
     name: skill-mint-server
     env: node
-    buildCommand: npm install
+    buildCommand: bash ./render-build.sh && npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV

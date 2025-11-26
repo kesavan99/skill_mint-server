@@ -1,18 +1,16 @@
 const pdfService = require('../../services/pdfService');
 const pdfParserService = require('../../services/pdfParserService');
 const geminiService = require('../../services/geminiService');
+const { scanBuffer } = require("../../utils/clamScanner");
 
 exports.uploadAndParsePDF = async (req, res) => {
   try {
-    // Check if file was uploaded
     if (!req.file) {
       return res.status(400).json({ 
         error: 'No file uploaded',
         message: 'Please upload a PDF file' 
       });
     }
-
-    // Check if it's a PDF
     if (req.file.mimetype !== 'application/pdf') {
       return res.status(400).json({ 
         error: 'Invalid file type',
@@ -20,9 +18,18 @@ exports.uploadAndParsePDF = async (req, res) => {
       });
     }
 
-    console.log('Processing uploaded PDF:', req.file.originalname);
+    const scanResult = await scanBuffer(req.file.buffer);
+    if (scanResult.isInfected) {
+      console.error("Infected PDF detected:", scanResult.viruses);
 
-    // Step 1: Extract text from PDF
+      return res.status(400).json({
+        error: "Malicious PDF detected",
+        message: `Infected with: ${scanResult.viruses.join(", ")}`
+      });
+    }
+
+    console.log('scan passed + Processing uploaded PDF:', req.file.originalname);
+
     const extractedText = await pdfParserService.extractTextFromPDF(req.file.buffer);
     
     if (!extractedText || extractedText.trim().length === 0) {
@@ -32,14 +39,10 @@ exports.uploadAndParsePDF = async (req, res) => {
       });
     }
 
-    console.log('Extracted text length:', extractedText.length);
-
-    // Step 2: Parse with Gemini AI
     const parsedResumeData = await geminiService.parseResumeWithAI(extractedText);
 
     console.log('Successfully parsed resume data');
 
-    // Return the structured data
     res.json(parsedResumeData);
   } catch (error) {
     console.error('Error processing PDF upload:', error);

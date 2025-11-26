@@ -39,7 +39,7 @@ const googleLoginValidation = [
         .trim(),
 ];
 
-router.post('/login', authMiddleware,loginValidation, validate, AuthController.login);
-router.post('/google-login', authMiddleware, strictLimiter, googleLoginValidation, validate, AuthController.googleLogin);
+router.post('/login',loginValidation, validate, AuthController.login);
+router.post('/google-login', strictLimiter, googleLoginValidation, validate, AuthController.googleLogin);
 
 module.exports = router;
