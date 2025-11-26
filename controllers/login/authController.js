@@ -38,12 +38,16 @@ class AuthController {
           loginMethod: result.data.loginMethod
         });
         
-        // Set cookie
-        res.cookie('authToken', token, {
+        // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+        const cookieOpts = {
           httpOnly: true,
-          sameSite: 'lax',
-          maxAge: 3 * 60 * 60 * 1000 // 3 hours
-        });
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'none',
+          path: '/',
+          maxAge: 3 * 60 * 60 * 1000
+        };
+
+        res.cookie('authToken', token, cookieOpts);
         
         return res.status(201).json({
           status: 'success',
@@ -73,12 +77,16 @@ class AuthController {
           loginMethod: existingUser.loginMethod
         });
         
-        // Set cookie
-        res.cookie('authToken', token, {
+        // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+        const cookieOpts = {
           httpOnly: true,
-          sameSite: 'lax',
-          maxAge: 3 * 60 * 60 * 1000 // 3 hours
-        });
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'none',
+          path: '/',
+          maxAge: 3 * 60 * 60 * 1000
+        };
+
+        res.cookie('authToken', token, cookieOpts);
         
         return res.status(200).json({
           status: 'success',
@@ -188,12 +196,16 @@ class AuthController {
         loginMethod: 'google'
       });
       
-      // Set cookie
-      res.cookie('authToken', token, {
+      // Set cookie (HttpOnly, secure in production, SameSite=None for cross-site)
+      const cookieOpts = {
         httpOnly: true,
-        sameSite: 'lax',
-        maxAge: 3 * 60 * 60 * 1000 // 3 hours
-      });
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none',
+        path: '/',
+        maxAge: 3 * 60 * 60 * 1000
+      };
+
+      res.cookie('authToken', token, cookieOpts);
       
       return res.status(200).json({
         status: 'success',

@@ -14,12 +14,27 @@ const nocache = require("nocache");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// If running behind a proxy (Vercel, Render, nginx) trust the proxy
+// so secure cookies and req.protocol are detected correctly.
+app.set('trust proxy', 1);
+
+// Build allowed origin list from env or fallback to hardcoded list
+const allowedOrigins = [
+  'https://skillhubtools.store',
+  'http://skillhubtools.store',
+  'https://www.skillhubtools.store'
+];
+
 const corsOptions = {
-  origin: [
-    'https://skillhubtools.store',
-    'http://skillhubtools.store',
-    'https://www.skillhubtools.store'
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g., curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   credentials: true,
