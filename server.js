@@ -47,7 +47,14 @@ app.use(helmet());
 app.use(nocache());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());  
-app.use(normalLimiter);
+
+app.use((req, res, next) => {
+  if (req.path === "/skill-mint/check") {
+    return next();
+  }
+  return normalLimiter(req, res, next);
+});
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -234,6 +234,30 @@ class AuthController {
       });
     }
   }
+
+  static async logout(req, res) {
+  try {
+    res.clearCookie('authToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      path: '/',
+    });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Logged out successfully'
+    });
+  } catch (error) {
+    console.error('Logout error:', error);
+    return res.status(500).json({
+      status: 'error',
+      message: 'Logout failed'
+    });
+  }
+}
+
+
 }
 
 module.exports = AuthController;
