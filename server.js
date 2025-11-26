@@ -7,9 +7,9 @@ const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 const codeRoutes = require('./routes/codeRoutes');
 const mongooseConnection = require('./models/mongooseConnection');
+const serverless = require('serverless-http');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: [
@@ -39,19 +39,10 @@ app.get('/', (req, res) => {
   });
 });
 
-const startServer = async () => {
-  try {
-    await mongooseConnection.connect();
-    
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();
+// Connect to MongoDB on cold start (pooled connection will be reused by serverless)
+mongooseConnection.connect().catch((err) => {
+  console.error('Initial MongoDB connection error:', err);
+});
 
 module.exports = app;
+module.exports.handler = serverless(app);
