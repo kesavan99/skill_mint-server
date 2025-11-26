@@ -33,6 +33,7 @@ app.use('/api/resume', resumeRoutes);
 app.use('/api/code', codeRoutes);
 
 app.get('/', (req, res) => {
+  console.log(`Server is wake up`);
   res.json({
     message: 'Skill Mint Server is running',
     version: '1.0.0'
